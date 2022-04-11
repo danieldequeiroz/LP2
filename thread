@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pthread.h>
+typedef struct {
+    int inicio;
+    int fim;
+} t_dois_num;
+
+void* funcao_concorrente(void* p){
+    
+    t_dois_num params = (t_dois_num)p;
+    int start = params->  inicio;
+    int end = params->fim;
+    long i;
+
+    for(i = 0; i < limit; i++){
+        printf("fc: %ld\n", i);
+        _sleep(1);
+    }
+
+    return (void*) limit;
+}
+
+int funcao_sequencial(int p){
+    for(int i = 0;i < p; i++){
+        printf("fs: %ld\n", i);
+        _sleep(1)
+    }
+
+}
+
+int main(void){
+    long res_c;
+    int res_s;
+    pthread_t t1;
+    t_dois_num param;
+
+    //res = (long) funcao_concorrente((*void)10);
+    pthread_create(&t1,NULL,funcao_concorrente,(void*)6);
+    res_s = funcao_sequencial(3);
+
+    pthread_join(t1, (void**)&res_c);
+    printf("main: res_c = %ld\n", res_c);
+    printf("main: res_s %ld\n", res_s);
+
+}
